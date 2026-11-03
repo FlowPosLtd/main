@@ -1,0 +1,5 @@
+# Wrangler local dev state and dependencies
+.wrangler/
+node_modules/
+.dev.vars*
+.DS_Store
