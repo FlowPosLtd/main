@@ -686,6 +686,7 @@ function buildTill() {
   const head = new THREE.Group(); head.position.set(-0.35, 1.95, 0); head.rotation.x = -0.18; g.add(head);
   head.add(box(1.82, 1.18, 0.08));
   const s = makeScreen(1.7, 1.06, 820, drawTill);
+  s.mesh.material.color.set(0xa8a8a8); // light UI: keep it under the bloom threshold so text stays sharp
   s.mesh.position.z = 0.045; head.add(s.mesh);
   const reader = new THREE.Group(); reader.position.set(1.15, 1.32, 0.25); reader.rotation.set(-0.35, -0.35, 0); g.add(reader);
   reader.add(box(0.42, 0.66, 0.07, 0x10141f, 0.5));
