@@ -30,3 +30,26 @@ Then open http://localhost:8000.
 - **"Book a demo" link:** set the `mailto:` in the last section of `index.html`.
 
 Respects `prefers-reduced-motion`, and falls back to a plain gradient if WebGL is not available.
+
+## Deploy (Cloudflare Workers)
+
+The site is served as static files by a Cloudflare Worker (`wrangler.jsonc`).
+`.assetsignore` keeps non-site files (like `.git`, this README and the config) private,
+and `_headers` sets security headers and long caching for `vendor/`.
+
+**One-time setup (auto-deploy from GitHub):**
+
+1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Import a repository**.
+2. Pick `FlowPosLtd/main`.
+3. Project name: `flowpos-site` (must match `name` in `wrangler.jsonc`).
+4. Build command: leave empty. Deploy command: `npx wrangler deploy`.
+5. Production branch: `main`. Save and deploy.
+
+After that, every push to `main` goes live at `https://flowpos-site.<your-subdomain>.workers.dev`.
+To use your own domain later: Worker → **Settings** → **Domains & Routes** → **Add** → Custom domain.
+
+**Preview locally like Cloudflare does:**
+
+```bash
+npx wrangler dev
+```
