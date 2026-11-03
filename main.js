@@ -11,7 +11,7 @@ import * as THREE from 'three';
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const C = {
   bg: 0x070a12, teal: 0x2ee6c5, purple: 0x8b5cf6, pink: 0xf472b6,
-  amber: 0xfbbf24, body: 0x161c2c, body2: 0x0f1422,
+  amber: 0xfbbf24, sky: 0x60a5fa, green: 0x4ade80, body: 0x161c2c, body2: 0x0f1422,
 };
 
 /* ---------- Renderer ---------- */
@@ -31,7 +31,7 @@ renderer.toneMappingExposure = 1.1;
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(C.bg);
-scene.fog = new THREE.Fog(C.bg, 20, 46);
+scene.fog = new THREE.Fog(C.bg, 24, 56);
 
 const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 120);
 camera.position.set(0, 8, 18);
@@ -121,24 +121,50 @@ const S = {
   nextId: 1042,
   sales: 3482.5,
   orders: 186,
-  channels: { Till: 112, Kiosk: 46, Online: 28 },
+  channels: { POS: 112, Kiosk: 46, Online: 28, Links: 19, Subs: 41 },
   chart: Array.from({ length: 24 }, (_, i) => 40 + Math.sin(i / 3) * 14 + i * 2.2 + Math.random() * 8),
   tickets: [],
   till: null, tillSent: 0, readerPaid: 0,
   kiosk: null, kioskDone: 0,
   store: null, storeDone: 0,
+  link: null, linkPaid: 0, nextLink: 208,
+  subs: { members: 248, feed: [], renewed: 0 },
 };
+const LINKS = [
+  ['Catering deposit', 120], ['Private event', 250], ['Birthday cake', 45],
+  ['Invoice INV-311', 86.4], ['Office lunch', 162.5],
+];
+const PLANS = [['Coffee Club', 15, 'month'], ['Lunch Pass', 45, 'month'], ['Bakery Box', 9.5, 'week'], ['Coffee Club', 150, 'year']];
+const NAMES = ['Amira K.', 'Tom R.', 'Priya S.', 'Jon B.', 'Leah M.', 'Sam O.', 'Nina F.', 'Ravi P.'];
+function nextDate(period) {
+  const d = new Date();
+  if (period === 'week') d.setDate(d.getDate() + 7);
+  else if (period === 'year') d.setFullYear(d.getFullYear() + 1);
+  else d.setMonth(d.getMonth() + 1);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+function newLink() {
+  const [desc, amount] = pick(LINKS);
+  return { id: 'PL-' + S.nextLink++, desc, total: amount };
+}
+function newRenewal() {
+  const [plan, price, period] = pick(PLANS);
+  S.nameIdx = ((S.nameIdx ?? -1) + 1) % NAMES.length;
+  return { name: NAMES[S.nameIdx], plan, total: price, period, next: nextDate(period) };
+}
+S.link = newLink();
+S.subs.feed = [newRenewal(), newRenewal(), newRenewal()];
 function randomOrder(source) {
   const pool = [...MENU].sort(() => Math.random() - 0.5);
   const items = pool.slice(0, 1 + Math.floor(Math.random() * 3)).map((m) => ({ ...m, q: 1 + (Math.random() < 0.3 ? 1 : 0) }));
   const total = items.reduce((a, i) => a + i.p * i.q, 0);
   return { id: S.nextId++, table: 1 + Math.floor(Math.random() * 12), items, total, source, born: now() };
 }
-S.till = randomOrder('Till');
+S.till = randomOrder('POS');
 S.kiosk = randomOrder('Kiosk');
 S.store = randomOrder('Online');
 [190, 85, 30].forEach((age, i) => {
-  const o = randomOrder(['Till', 'Kiosk', 'Online'][i]);
+  const o = randomOrder(['POS', 'Kiosk', 'Online'][i]);
   o.born = now() - age;
   S.tickets.push(o);
 });
@@ -147,7 +173,7 @@ S.store = randomOrder('Online');
 function drawTill(ctx, W, H) {
   ctx.fillStyle = '#0b1120'; ctx.fillRect(0, 0, W, H);
   ctx.fillStyle = '#121b30'; ctx.fillRect(0, 0, W, 40);
-  txt(ctx, 'FlowPOS · Till 1', 18, 26, 16, '#e8ecf5', 600);
+  txt(ctx, 'FlowPOS · POS 1', 18, 26, 16, '#e8ecf5', 600);
   const d = new Date();
   txt(ctx, d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), W - 18, 26, 15, '#9aa4b8', 500, 'right');
   // product grid
@@ -214,7 +240,7 @@ function drawKds(ctx, W, H) {
     txt(ctx, `#${o.id}`, x + 14, y + 37, 22, '#061016', 700);
     const mm = String(Math.floor(age / 60)).padStart(2, '0'), ss = String(Math.floor(age % 60)).padStart(2, '0');
     txt(ctx, `${mm}:${ss}`, x + tw - 14, y + 37, 20, '#061016', 700, 'right');
-    txt(ctx, o.source === 'Till' ? `Table ${o.table}` : o.source, x + 14, y + 90, 16, '#9aa4b8', 600);
+    txt(ctx, o.source === 'POS' ? `Table ${o.table}` : o.source, x + 14, y + 90, 16, '#9aa4b8', 600);
     o.items.forEach((it, j) => txt(ctx, `${it.q}× ${it.n}`, x + 14, y + 130 + j * 36, 20, '#e8ecf5', 600));
     rr(ctx, x + 14, y + th - 58, tw - 28, 42, 10); ctx.strokeStyle = '#22304d'; ctx.lineWidth = 2; ctx.stroke();
     txt(ctx, 'Bump', x + tw / 2, y + th - 31, 16, '#9aa4b8', 600, 'center');
@@ -284,9 +310,9 @@ function drawDashboard(ctx, W, H) {
   const bx = cx + cw + 12, bw = W - bx - 16;
   rr(ctx, bx, cy, bw, ch, 12); ctx.fillStyle = '#121b30'; ctx.fill();
   txt(ctx, 'By channel', bx + 14, cy + 26, 14, '#c3cad8', 600);
-  const total = S.channels.Till + S.channels.Kiosk + S.channels.Online;
-  [['Till', '#2ee6c5'], ['Kiosk', '#fbbf24'], ['Online', '#f472b6']].forEach(([k, col], i) => {
-    const y = cy + 58 + i * 64, frac = S.channels[k] / total;
+  const total = Object.values(S.channels).reduce((a, b) => a + b, 0);
+  [['POS', '#2ee6c5'], ['Kiosk', '#fbbf24'], ['Online', '#f472b6'], ['Links', '#60a5fa'], ['Subs', '#4ade80']].forEach(([k, col], i) => {
+    const y = cy + 52 + i * 46, frac = S.channels[k] / total;
     txt(ctx, k, bx + 14, y, 13, '#9aa4b8');
     txt(ctx, String(S.channels[k]), bx + bw - 14, y, 13, '#e8ecf5', 600, 'right');
     rr(ctx, bx + 14, y + 10, bw - 28, 12, 6); ctx.fillStyle = '#1b2440'; ctx.fill();
@@ -322,6 +348,71 @@ function drawStore(ctx, W, H) {
   ctx.fillStyle = done ? '#4ade80' : '#f472b6'; ctx.fill();
   txt(ctx, done ? 'Order placed ✓' : `Checkout · ${money(S.store.total)}`, W / 2, H - 45, 17, '#061016', 700, 'center');
 }
+
+function drawPaylink(ctx, W, H) {
+  ctx.fillStyle = '#0b1020'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#121b30'; ctx.fillRect(0, 0, W, 44);
+  txt(ctx, 'Inbox', 20, 29, 17, '#e8ecf5', 700);
+  txt(ctx, '1 new', W - 20, 29, 14, '#60a5fa', 600, 'right');
+  const x = 20, y = 60, w = W - 40, h = H - 80;
+  rr(ctx, x, y, w, h, 16); ctx.fillStyle = '#121b30'; ctx.fill();
+  ctx.fillStyle = '#60a5fa'; ctx.beginPath(); ctx.arc(x + 32, y + 34, 16, 0, Math.PI * 2); ctx.fill();
+  txt(ctx, 'B', x + 32, y + 40, 16, '#061016', 700, 'center');
+  txt(ctx, 'Bean & Co', x + 58, y + 30, 16, '#e8ecf5', 700);
+  txt(ctx, 'Payment request · ' + S.link.id, x + 58, y + 50, 13, '#9aa4b8');
+  txt(ctx, 'AMOUNT', x + w / 2, y + 100, 12, '#9aa4b8', 600, 'center');
+  txt(ctx, money(S.link.total), x + w / 2, y + 146, 44, '#e8ecf5', 700, 'center');
+  txt(ctx, S.link.desc, x + w / 2, y + 176, 15, '#c3cad8', 500, 'center');
+  const paid = now() < S.linkPaid;
+  rr(ctx, x + 24, y + h - 92, w - 48, 50, 25);
+  ctx.fillStyle = paid ? '#4ade80' : '#60a5fa'; ctx.fill();
+  txt(ctx, paid ? 'Paid ✓' : 'Pay Now', x + w / 2, y + h - 60, 18, '#061016', 700, 'center');
+  txt(ctx, 'Secure one-off payment link', x + w / 2, y + h - 18, 12, '#9aa4b8', 500, 'center');
+}
+
+function drawSubs(ctx, W, H) {
+  ctx.fillStyle = '#0a0f1c'; ctx.fillRect(0, 0, W, H);
+  txt(ctx, 'Subscriptions', 22, 40, 22, '#e8ecf5', 700);
+  rr(ctx, W - 112, 20, 90, 28, 14); ctx.fillStyle = 'rgba(74,222,128,0.15)'; ctx.fill();
+  txt(ctx, '● Active', W - 67, 39, 13, '#4ade80', 600, 'center');
+  const mrr = S.subs.members * 15;
+  [['Members', String(S.subs.members)], ['Monthly income', '£' + mrr.toLocaleString('en-GB')]].forEach(([k, v], i) => {
+    const kw = (W - 44 - 12) / 2, x = 22 + i * (kw + 12);
+    rr(ctx, x, 62, kw, 70, 12); ctx.fillStyle = '#121b30'; ctx.fill();
+    txt(ctx, k, x + 14, 86, 13, '#9aa4b8');
+    txt(ctx, v, x + 14, 118, 24, '#e8ecf5', 700);
+  });
+  txt(ctx, 'Latest renewals', 22, 162, 14, '#c3cad8', 600);
+  const fresh = now() < S.subs.renewed;
+  S.subs.feed.slice(0, 3).forEach((r, i) => {
+    const y = 174 + i * 66;
+    rr(ctx, 22, y, W - 44, 56, 12); ctx.fillStyle = '#121b30'; ctx.fill();
+    if (i === 0 && fresh) { ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 3; ctx.stroke(); }
+    txt(ctx, r.name, 38, y + 24, 15, '#e8ecf5', 600);
+    txt(ctx, `${r.plan} · ${money(r.total)}/${r.period}`, 38, y + 44, 12, '#9aa4b8');
+    txt(ctx, i === 0 && fresh ? 'Renewed ✓' : 'Next ' + r.next, W - 38, y + 34, 13, i === 0 && fresh ? '#4ade80' : '#9aa4b8', 600, 'right');
+  });
+}
+
+function glowTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const ctx = c.getContext('2d');
+  const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.25, 'rgba(255,255,255,0.55)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 128, 128);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+const GLOW = glowTexture();
+const glowSprite = (color, size, opacity = 1) => {
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: GLOW, color, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending,
+  }));
+  s.scale.setScalar(size);
+  return s;
+};
 
 /* ---------- Device builders (front of each device faces +Z) ---------- */
 function buildTill() {
@@ -383,15 +474,69 @@ function buildStore() {
   return { group: g, anchorY: 2.4, centerY: 1.6, dist: 3.0, phone };
 }
 
+function buildPaylink() {
+  const g = new THREE.Group();
+  const ped = box(1.1, 1.0, 0.8, C.body2, 0.25); ped.position.y = 0.5; g.add(ped);
+  const tab = new THREE.Group(); tab.position.set(0, 1.68, 0); tab.rotation.x = -0.14; g.add(tab);
+  tab.add(box(0.98, 1.32, 0.05, 0x10141f, 0.5));
+  const s = makeScreen(0.9, 1.24, 360, drawPaylink);
+  s.mesh.position.z = 0.027; tab.add(s.mesh);
+  // floating envelope
+  const env = new THREE.Group(); env.position.set(0, 2.95, 0); g.add(env);
+  const envMat = new THREE.LineBasicMaterial({ color: C.sky, transparent: true, opacity: 0.9 });
+  const envBody = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.52, 0.03), new THREE.MeshStandardMaterial({ color: 0x14203a, roughness: 0.4, metalness: 0.5 }));
+  env.add(envBody);
+  const pts = [[-0.4, 0.26], [0, -0.04], [0, -0.04], [0.4, 0.26], [-0.4, 0.26], [0.4, 0.26], [0.4, 0.26], [0.4, -0.26], [0.4, -0.26], [-0.4, -0.26], [-0.4, -0.26], [-0.4, 0.26]]
+    .map(([x, y]) => new THREE.Vector3(x, y, 0.02));
+  env.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), envMat));
+  env.add(glowSprite(C.sky, 1.6, 0.35));
+  return {
+    group: g, anchorY: 3.4, centerY: 1.9, dist: 3.9,
+    tick(t) { env.position.y = 2.95 + Math.sin(t * 1.2) * 0.08; env.rotation.y = Math.sin(t * 0.7) * 0.4; },
+  };
+}
+function buildSubs() {
+  const g = new THREE.Group();
+  const ped = cyl(0.6, 1.0, C.body2); ped.position.y = 0.5; g.add(ped);
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(0.61, 0.02, 8, 48), new THREE.MeshBasicMaterial({ color: C.green }));
+  rim.rotation.x = Math.PI / 2; rim.position.y = 1.0; g.add(rim);
+  const tab = new THREE.Group(); tab.position.set(0, 1.85, 0); tab.rotation.x = -0.1; g.add(tab);
+  tab.add(box(1.5, 1.24, 0.05, 0x10141f, 0.5));
+  const s = makeScreen(1.42, 1.16, 520, drawSubs);
+  s.mesh.position.z = 0.027; tab.add(s.mesh);
+  // "renews" ring with a dot orbiting around the screen
+  const loop = new THREE.Group(); loop.position.set(0, 1.85, 0); g.add(loop);
+  loop.add(new THREE.Mesh(new THREE.TorusGeometry(1.12, 0.012, 8, 128), new THREE.MeshBasicMaterial({ color: C.green, transparent: true, opacity: 0.6 })));
+  const dot = new THREE.Group(); dot.add(glowSprite(C.green, 0.5)); loop.add(dot);
+  // floating card above
+  const card = new THREE.Group(); card.position.set(0, 3.1, 0); g.add(card);
+  const cardGeo = new THREE.BoxGeometry(0.8, 0.5, 0.02);
+  card.add(new THREE.Mesh(cardGeo, new THREE.MeshStandardMaterial({ color: 0x12301f, roughness: 0.3, metalness: 0.7 })));
+  card.add(new THREE.LineSegments(new THREE.EdgesGeometry(cardGeo), new THREE.LineBasicMaterial({ color: C.green })));
+  const chip = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.09, 0.03), new THREE.MeshBasicMaterial({ color: C.amber }));
+  chip.position.set(-0.24, 0.05, 0); card.add(chip);
+  return {
+    group: g, anchorY: 3.5, centerY: 2.0, dist: 4.2,
+    tick(t) {
+      const a = t * 0.9;
+      dot.position.set(Math.cos(a) * 1.12, Math.sin(a) * 1.12, 0);
+      card.rotation.y = t * 0.8;
+      card.position.y = 3.1 + Math.sin(t * 1.1) * 0.06;
+    },
+  };
+}
+
 /* ---------- Layout: arc of devices around the hub ---------- */
-const R = 7.6;
+const R = 8.8;
 const devices = {};
 const LAYOUT = [
-  ['till', buildTill, -64],
-  ['kds', buildKds, -32],
+  ['till', buildTill, -75],
+  ['kds', buildKds, -50],
+  ['kiosk', buildKiosk, -25],
   ['store', buildStore, 0],
-  ['kiosk', buildKiosk, 32],
-  ['dashboard', buildDashboard, 64],
+  ['paylink', buildPaylink, 25],
+  ['subs', buildSubs, 50],
+  ['dashboard', buildDashboard, 75],
 ];
 const ringGeo = new THREE.RingGeometry(1.5, 1.56, 72);
 LAYOUT.forEach(([name, build, deg]) => {
@@ -421,25 +566,6 @@ LAYOUT.forEach(([name, build, deg]) => {
 });
 
 /* ---------- Hub ---------- */
-function glowTexture() {
-  const c = document.createElement('canvas'); c.width = c.height = 128;
-  const ctx = c.getContext('2d');
-  const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-  g.addColorStop(0, 'rgba(255,255,255,1)');
-  g.addColorStop(0.25, 'rgba(255,255,255,0.55)');
-  g.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = g; ctx.fillRect(0, 0, 128, 128);
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
-  return t;
-}
-const GLOW = glowTexture();
-const glowSprite = (color, size, opacity = 1) => {
-  const s = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: GLOW, color, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending,
-  }));
-  s.scale.setScalar(size);
-  return s;
-};
 
 const hub = new THREE.Group(); hub.position.copy(HUB); scene.add(hub);
 const core = new THREE.Mesh(
@@ -531,18 +657,49 @@ function updatePackets(dt) {
 const feed = document.getElementById('feed');
 function pushFeed(o) {
   const li = document.createElement('li');
-  li.innerHTML = `<span><b>#${o.id}</b> · ${o.source}</span><em>${money(o.total)}</em>`;
+  const id = typeof o.id === 'number' ? '#' + o.id : o.id;
+  li.innerHTML = `<span><b>${id}</b> · ${o.source}</span><em>${money(o.total)}</em>`;
   feed.prepend(li);
   while (feed.children.length > 4) feed.lastChild.remove();
 }
 const SOURCES = [
-  { name: 'till', label: 'Till', color: C.teal },
+  { name: 'till', label: 'POS', color: C.teal },
   { name: 'kiosk', label: 'Kiosk', color: C.amber },
+  { name: 'paylink', label: 'Payment link', channel: 'Links', color: C.sky, payment: true },
   { name: 'store', label: 'Online', color: C.pink },
+  { name: 'till', label: 'POS', color: C.teal },
+  { name: 'subs', label: 'Subscription', channel: 'Subs', color: C.green, payment: true },
 ];
+function newPayment(src) {
+  const t = now();
+  let p;
+  if (src.name === 'paylink') {
+    p = { ...S.link, source: src.label, channel: src.channel };
+    S.linkPaid = t + 1.8;
+    setTimeout(() => { S.link = newLink(); }, 2200);
+  } else {
+    const r = newRenewal();
+    S.subs.feed.unshift(r); S.subs.feed.length = 3;
+    S.subs.renewed = t + 1.8;
+    if (Math.random() < 0.5) S.subs.members += 1;
+    p = { id: r.plan, total: r.total, source: src.label, channel: src.channel };
+  }
+  devices[src.name].flash = 1;
+  spawnPacket(src.name, true, src.color, () => {
+    hubPulse = 1;
+    pushFeed(p);
+    spawnPacket('dashboard', false, src.color, () => {
+      S.sales += p.total; S.channels[p.channel] += 1;
+      const last = S.chart[S.chart.length - 1];
+      S.chart.push(Math.max(20, last + (Math.random() - 0.3) * 10));
+      devices.dashboard.flash = 1;
+    });
+  });
+}
 let sourceIdx = 0;
 function newOrder() {
   const src = SOURCES[sourceIdx++ % SOURCES.length];
+  if (src.payment) return newPayment(src);
   const o = randomOrder(src.label);
   const t = now();
   if (src.name === 'till') { S.till = o; S.tillSent = t + 1.6; S.readerPaid = t + 1.6; }
@@ -580,13 +737,13 @@ function shotFor(name) {
   const mobile = isMobile();
   if (name === 'hero') {
     return mobile
-      ? { pos: new THREE.Vector3(0, 12, 30), target: new THREE.Vector3(0, 6.5, -2) }
-      : { pos: new THREE.Vector3(1, 7.8, 18.5), target: new THREE.Vector3(-5.2, 1.8, -1) };
+      ? { pos: new THREE.Vector3(0, 14, 38), target: new THREE.Vector3(0, 7.5, -2) }
+      : { pos: new THREE.Vector3(2, 11, 27), target: new THREE.Vector3(-5.6, 1.6, -1) };
   }
   if (name === 'cta') {
     return mobile
-      ? { pos: new THREE.Vector3(0, 16, 30), target: new THREE.Vector3(0, 7.5, -2) }
-      : { pos: new THREE.Vector3(0, 13, 18), target: new THREE.Vector3(0, 6.2, -2) };
+      ? { pos: new THREE.Vector3(0, 18, 38), target: new THREE.Vector3(0, 8.5, -2) }
+      : { pos: new THREE.Vector3(0, 15, 21), target: new THREE.Vector3(0, 7.0, -2) };
   }
   const d = devices[name];
   const ry = d.group.rotation.y;
@@ -691,7 +848,10 @@ function frame() {
     d.ring.material.opacity = 0.35 + focus * 0.4 + d.flash * 0.4;
     d.tubeMat.opacity = 0.14 + focus * 0.2 + d.flash * 0.3;
   });
-  if (!reduceMotion) devices.store.phone.position.y = 1.62 + Math.sin(t * 1.4) * 0.05;
+  if (!reduceMotion) {
+    devices.store.phone.position.y = 1.62 + Math.sin(t * 1.4) * 0.05;
+    Object.values(devices).forEach((d) => d.tick?.(t));
+  }
 
   // hub
   hubPulse = Math.max(0, hubPulse - dt * 1.8);

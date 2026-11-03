@@ -1,7 +1,7 @@
 # FlowPOS main site
 
 A one-page landing site with a live Three.js scene showing what FlowPOS does:
-an order made on the **till**, **kiosk** or **online store** flies to the
+a sale made on the **point of sale**, **kiosk**, **online store**, **payment link** or **subscription** flies to the
 **FlowPOS Cloud**, then lands on the **kitchen screen** and the **dashboard**.
 Scrolling moves the camera from device to device.
 
