@@ -63,8 +63,13 @@ body.no-webgl {
   pointer-events: none;
 }
 .nav > * { pointer-events: auto; }
-.brand { display: flex; align-items: center; text-decoration: none; }
-.brand img { display: block; height: 36px; width: auto; }
+.brand {
+  display: flex; align-items: center; text-decoration: none;
+  padding: 7px 14px; border-radius: 14px;
+  background: #fff; /* the logo's original colours need a light ground */
+  box-shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.6);
+}
+.brand img { display: block; height: 30px; width: auto; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -284,7 +289,8 @@ body.hovering #scene { cursor: pointer; }
 /* ---------- Phones (portrait): bottom sheet ---------- */
 @media (max-width: 760px) and (min-height: 520px), (max-width: 1024px) and (orientation: portrait) and (min-height: 520px) {
   .nav { padding-top: calc(12px + env(safe-area-inset-top, 0px)); padding-left: var(--gutter); padding-right: var(--gutter-r); }
-  .brand img { height: 30px; }
+  .brand { padding: 6px 11px; border-radius: 12px; }
+  .brand img { height: 24px; }
   .panel, .panel.intro {
     left: 0; right: 0; top: auto; bottom: 0; transform: none;
     width: auto; max-height: 54dvh;
@@ -316,7 +322,8 @@ body.hovering #scene { cursor: pointer; }
 @media (max-height: 519px) {
   .nav { padding-top: 10px; padding-bottom: 10px; }
   .nav .btn.small { min-height: 32px; font-size: 13px; }
-  .brand img { height: 26px; }
+  .brand { padding: 5px 10px; border-radius: 10px; }
+  .brand img { height: 20px; }
   .panel, .panel.intro {
     top: 58px; bottom: 10px; transform: none;
     left: max(12px, env(safe-area-inset-left, 0px));

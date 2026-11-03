@@ -41,11 +41,11 @@ and `_headers` sets security headers and long caching for `vendor/`.
 
 1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Import a repository**.
 2. Pick `FlowPosLtd/main`.
-3. Project name: `flowpos-site` (must match `name` in `wrangler.jsonc`).
+3. Project name: `main` (must match `name` in `wrangler.jsonc`).
 4. Build command: leave empty. Deploy command: `npx wrangler deploy`.
 5. Production branch: `main`. Save and deploy.
 
-After that, every push to `main` goes live at `https://flowpos-site.<your-subdomain>.workers.dev`.
+After that, every push to `main` goes live at `https://main.<your-subdomain>.workers.dev`.
 To use your own domain later: Worker → **Settings** → **Domains & Routes** → **Add** → Custom domain.
 
 **Preview locally like Cloudflare does:**
