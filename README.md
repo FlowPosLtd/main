@@ -15,6 +15,7 @@ Then open http://localhost:8000.
 ## Files
 
 - `index.html` – all page content
+- `privacy-policy.html` – privacy policy, served at `/privacy-policy` (styles in `assets/css/legal.css`)
 - `assets/css/site.css` – styles
 - `assets/js/site.js` – tabs, mobile menu, scroll effects, contact form
 - `assets/img/` – logos, icons, screenshots
@@ -22,6 +23,7 @@ Then open http://localhost:8000.
 
 ## To do
 
+- Privacy policy: fill in the yellow `[bracket]` blanks (ICO number, analytics tool, cookie settings link, keep-times, data protection contact).
 - Contact form: set the real endpoint in the form `action` in `index.html` (it is a `TODO` placeholder now).
 
 ## Deploy (Cloudflare Workers)
