@@ -23,7 +23,7 @@ Then open http://localhost:8000.
 
 ## To do
 
-- Privacy policy: fill in the ICO registration number (highlighted in yellow).
+- Privacy policy: once registered with the ICO, add the registration number back to the "Who we are" section.
 - Contact form: set the real endpoint in the form `action` in `index.html` (it is a `TODO` placeholder now).
 
 ## Deploy (Cloudflare Workers)
