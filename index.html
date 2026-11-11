@@ -1,59 +1,283 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>FlowPOS — EPOS, online store and payments in one system</title>
-  <meta name="description" content="Take the FlowPOS tour: online store and checkout, kitchen display, EPOS and card reader, self-order kiosk, payment links, subscriptions and a live dashboard — all in one system." />
-  <meta name="theme-color" content="#06080f" />
-  <link rel="icon" href="favicon.ico" sizes="32x32" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "./vendor/three.module.min.js",
-        "three/addons/": "./vendor/addons/"
-      }
-    }
-  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>One Flow. Total control. | FlowPOS</title>
+<meta name="description" content="FlowPOS brings payments, UK EPOS, global ecommerce and business banking together in one platform. No monthly fee. 1.39% in person, 1.25% + 20p online on UK consumer cards.">
+<meta name="theme-color" content="#0D0545">
+<link rel="canonical" href="https://flowpos.co.uk/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FlowPOS">
+<meta property="og:title" content="One Flow. Total control.">
+<meta property="og:description" content="Payments, UK EPOS, global ecommerce and banking in one platform. No monthly fee.">
+<meta property="og:url" content="https://flowpos.co.uk/">
+<!-- TODO: og:image must be an absolute URL once hosted, e.g. https://flowpos.co.uk/assets/img/og-image.png -->
+<meta property="og:image" content="assets/img/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="628">
+<meta property="og:image:alt" content="FlowPOS: get paid every way your customers pay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="One Flow. Total control.">
+<meta name="twitter:description" content="Payments, UK EPOS, global ecommerce and banking in one platform. No monthly fee.">
+<meta name="twitter:image" content="assets/img/og-image.png">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
-  <canvas id="scene" aria-hidden="true"></canvas>
-  <div class="vignette" aria-hidden="true"></div>
+<a class="sr" href="#main">Skip to content</a>
+<header class="nav" id="top"><div class="wrap">
+  <a class="logo" href="#top" aria-label="FlowPOS home"><img src="assets/img/flow-logo-white.svg" alt="FlowPOS" width="130" height="34"></a>
+  <ul>
+    <li><a href="#payments">Payments</a></li><li><a href="#epos">UK EPOS</a></li><li><a href="#ecommerce">Global Ecommerce</a></li><li><a href="#banking">Banking</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="right">
+    <a class="btn btn-pink" href="https://app.flowpos.co.uk">Start taking payments</a>
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mm"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</div>
+<nav class="mobile-menu" id="mm" aria-label="Mobile">
+  <a href="#payments">Payments</a><a href="#epos">UK EPOS</a><a href="#ecommerce">Global Ecommerce</a><a href="#banking">Banking</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+  <a class="btn btn-pink" href="https://app.flowpos.co.uk">Start taking payments <span class="arr" aria-hidden="true">&rarr;</span></a>
+</nav>
+</header>
 
-  <header class="nav">
-    <a class="brand" href="#intro" aria-label="Flow — back to start">
-      <img src="assets/flow-logo.svg" alt="Flow — Business in a Box" width="130" height="36" />
-    </a>
-    <a class="btn small" href="mailto:hello@flowpos.co.uk?subject=FlowPOS%20demo">Book a demo</a>
-  </header>
-
-  <aside class="live" aria-hidden="true">
-    <p class="live-title"><i></i> Live payments</p>
-    <ul id="feed"></ul>
-  </aside>
-
-  <main>
-    <section class="panel intro" id="panel" aria-label="Tour stage">
-      <div id="panelBody" aria-live="polite">
-        <p class="eyebrow">EPOS · Online store · Payments</p>
-        <h1>One system.<br /><span class="grad">Every sale, kitchen and payment.</span></h1>
-        <p class="lead">FlowPOS runs your online store and checkout, EPOS and card reader, kitchen screen, self-order kiosk, payment links, subscriptions and live dashboard — together.</p>
+<main id="main">
+<section class="hero">
+  <div class="wrap">
+    <div class="copy">
+      <span class="eyebrow"><i></i>Payments &middot; UK EPOS &middot; Global Ecommerce &middot; Banking</span>
+      <h1>One Flow.<br><em>Total control.</em></h1>
+      <p class="lead">Four pillars, one platform: <b>Payments</b> wherever your customers pay, <b>UK EPOS</b> and card terminals for your counter, <b>Global Ecommerce</b> with our AI Web Builder, and <b>Banking</b> with same-day settlement through our regulated partners.</p>
+      <div class="ctas"><a class="btn btn-pink" href="https://app.flowpos.co.uk">Start taking payments <span class="arr" aria-hidden="true">&rarr;</span></a><a class="btn btn-ghost" href="#pricing">See pricing</a></div>
+      <p class="fine">No monthly fee. 1.39% in person, 1.25% + 20p online on UK consumer cards. Other card types: contact us.</p>
+      <div class="tabs auto" role="tablist" aria-label="FlowPOS pillars">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p-pay" id="t-pay">Payments<span class="prog"><i></i></span></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-epos" id="t-epos">UK EPOS<span class="prog"><i></i></span></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-web" id="t-web">Ecommerce<span class="prog"><i></i></span></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-bank" id="t-bank">Banking<span class="prog"><i></i></span></button>
       </div>
-      <div class="pnav">
-        <button id="prev" class="icon" type="button" aria-label="Previous stage">←</button>
-        <span id="count" class="mono"></span>
-        <button id="next" class="btn small" type="button">Next →</button>
-      </div>
-    </section>
-    <nav class="stages" id="stages" aria-label="Tour stages"></nav>
-  </main>
+    </div>
+    <div class="stage" aria-live="polite">
+      <div class="panel on" role="tabpanel" id="p-pay" aria-labelledby="t-pay"><div class="mock">
+  <div class="m-phone" style="position:absolute;left:0;top:0">
+    <div class="m-screen">
+      <div class="m-row m-sb"><span class="m-muted m-sm">Tap to Pay</span><span class="m-muted m-sm">The Corner Caf&eacute;</span></div>
+      <div class="m-amt">&pound;24.50</div>
+      <div class="m-muted m-sm" style="text-align:center">2 &times; Flat white, 1 &times; Toastie</div>
+      <div class="m-nfc"><svg width="62" height="62" viewBox="0 0 64 64" fill="none" stroke="#780AEB" stroke-width="4" stroke-linecap="round"><path d="M22 20c4 7 4 17 0 24"/><path d="M31 14c6 11 6 25 0 36"/><path d="M40 8c8 15 8 33 0 48"/></svg></div>
+      <div class="m-muted m-sm" style="text-align:center">Hold card near phone</div>
+      <div class="m-ok"><svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.2l2.6 2.6L11 4.4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> Payment approved</div>
+    </div>
+  </div>
+  <div class="m-card" style="position:absolute;left:296px;top:34px;width:356px">
+    <div class="m-row m-sb"><span class="m-lbl">Payment link</span><span class="m-pill"><svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.2l2.6 2.6L11 4.4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Paid</span></div>
+    <div class="m-ttl">Deposit &middot; Table for 8</div>
+    <div class="m-row m-sb"><span class="m-muted m-sm">Sent by SMS</span><span class="m-val">&pound;80.00</span></div>
+  </div>
+  <div class="m-card" style="position:absolute;left:296px;top:204px;width:356px">
+    <div class="m-row m-sb"><span class="m-lbl">Subscription</span><span class="m-pill"><svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.2l2.6 2.6L11 4.4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Active</span></div>
+    <div class="m-ttl">Coffee Club &middot; Monthly</div>
+    <div class="m-row m-sb"><span class="m-muted m-sm">Renews 1st of month</span><span class="m-val">&pound;18.00</span></div>
+  </div>
+  <div class="m-card" style="position:absolute;left:296px;top:374px;width:356px">
+    <div class="m-row m-sb"><span class="m-lbl">Online checkout</span><span class="m-pill"><svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.2l2.6 2.6L11 4.4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Paid</span></div>
+    <div class="m-ttl">Order #2381</div>
+    <div class="m-row m-sb"><span class="m-muted m-sm">Card &middot; Visa</span><span class="m-val">&pound;42.90</span></div>
+  </div>
+</div></div>
+      <div class="panel" role="tabpanel" id="p-epos" aria-labelledby="t-epos"><div class="mock">
+  <div class="m-tablet" style="position:absolute;left:0;top:20px"><div class="m-tscreen">
+    <div class="m-grid"><div class="m-cats"><span class="m-cat on">All</span><span class="m-cat">Coffee</span><span class="m-cat">Food</span><span class="m-cat">Bakery</span></div><div class="m-tiles"><div class="m-tile"><b>Flat white</b><span>&pound;3.40</span></div><div class="m-tile"><b>Latte</b><span>&pound;3.60</span></div><div class="m-tile"><b>Cappuccino</b><span>&pound;3.50</span></div><div class="m-tile"><b>Sourdough toastie</b><span>&pound;6.50</span></div><div class="m-tile"><b>Falafel wrap</b><span class="low">Low stock &middot; 4</span></div><div class="m-tile"><b>Jacket potato</b><span>&pound;6.20</span></div><div class="m-tile"><b>Croissant</b><span>&pound;2.80</span></div><div class="m-tile"><b>Brownie</b><span>&pound;3.20</span></div><div class="m-tile"><b>Orange juice</b><span>&pound;2.90</span></div></div></div>
+    <div class="m-ticket"><div class="m-row m-sb"><b style="color:#0D0545;font-size:15px">Table 6</b><span class="m-muted" style="font-size:13px">Eat in</span></div>
+      <div class="m-li"><span>2 &times; Flat white</span><span>&pound;6.80</span></div>
+      <div class="m-li"><span>1 &times; Sourdough toastie</span><span>&pound;6.50</span></div>
+      <div class="m-li"><span>1 &times; Brownie</span><span>&pound;3.20</span></div>
+      <div class="m-li tot"><span>Total</span><span>&pound;16.50</span></div>
+      <div class="m-pays"><span class="on">Card</span><span>Cash</span><span>Split</span></div>
+      <div class="m-charge">Charge &pound;16.50</div></div>
+  </div></div>
+  <div class="m-card" style="position:absolute;left:372px;top:468px;width:280px;padding:16px 18px">
+    <div class="m-row m-sb"><span class="m-lbl">Online order</span><span class="m-pill"><svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.2l2.6 2.6L11 4.4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Accepted</span></div>
+    <div class="m-row m-sb" style="margin-top:8px"><span style="font-weight:650;color:#0D0545">Collection &middot; 12:30</span><span class="m-val" style="font-size:18px">&pound;21.40</span></div>
+  </div>
+</div></div>
+      <div class="panel" role="tabpanel" id="p-web" aria-labelledby="t-web"><div class="mock">
+  <div class="m-browser" style="position:absolute;left:0;top:30px;width:640px"><div class="m-bbar"><i></i><i></i><i></i><span class="m-url">AI Web Builder</span></div><img src="assets/img/builder-ui.webp" alt="" width="1070" height="670" style="width:100%"></div>
+  <div class="m-card" style="position:absolute;left:380px;top:400px;width:272px;padding:16px 18px">
+    <div class="m-row m-sb"><span class="m-lbl">Online checkout</span><span class="m-pill"><svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.2l2.6 2.6L11 4.4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Paid</span></div>
+    <div class="m-row m-sb" style="margin-top:8px"><span style="font-weight:650;color:#0D0545">Order #1047</span><span class="m-val" style="font-size:18px">&pound;35.00</span></div>
+  </div>
+</div></div>
+      <div class="panel" role="tabpanel" id="p-bank" aria-labelledby="t-bank"><div class="mock">
+  <div class="m-acct" style="position:absolute;left:0;top:30px">
+    <div class="m-row m-sb" style="font-size:14px;color:rgba(255,255,255,.78)"><span>Flow Business Account</span><span>GBP</span></div>
+    <div style="font-size:42px;font-weight:750;letter-spacing:-.03em;margin:16px 0 20px" class="num">&pound;8,420.15</div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 24px;font-size:14px"><span style="color:rgba(255,255,255,.62)">Sort code</span><span class="num">&bull;&bull;-&bull;&bull;-&bull;&bull;</span><span style="color:rgba(255,255,255,.62)">IBAN</span><span class="num">GB&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;</span></div>
+  </div>
+  <div class="m-card" style="position:absolute;left:300px;top:250px;width:352px">
+    <div class="m-lbl" style="margin-bottom:6px">Balances</div>
+    <div class="m-fx">
+      <div class="r"><span class="m-ccy">GBP</span><span>Pound sterling</span><b class="m-val" style="margin-left:auto;font-size:17px">&pound;8,420.15</b></div>
+      <div class="r"><span class="m-ccy">EUR</span><span>Euro</span><b class="m-val" style="margin-left:auto;font-size:17px">&euro;1,260.00</b></div>
+      <div class="r"><span class="m-ccy">USD</span><span>US dollar</span><b class="m-val" style="margin-left:auto;font-size:17px">$940.50</b></div>
+    </div>
+  </div>
+  <div class="m-card" style="position:absolute;left:0;top:300px;width:280px;padding:18px 20px">
+    <div class="m-row m-sb"><span class="m-lbl">Settlement</span><span class="m-pill"><svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.2l2.6 2.6L11 4.4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Same day</span></div>
+    <div style="font-weight:650;color:#0D0545;margin-top:10px">Today&rsquo;s card takings</div>
+    <div class="m-muted m-sm">Paid into your account</div>
+  </div>
+</div></div>
+    </div>
+  </div>
+</section>
 
-  <script type="module" src="main.js"></script>
+<section class="pillars" aria-label="The four pillars"><div class="wrap"><div class="grid">
+  <a class="pcard rv" href="#payments"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg></span><h3>Payments</h3><p>Card payments, online checkout, payment links, subscriptions and Tap to Pay on iPhone.</p><span class="more">Explore Payments <span class="arr" aria-hidden="true">&rarr;</span></span></a>
+  <a class="pcard rv d1" href="#epos"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3.5" width="18" height="12" rx="2"/><path d="M8 20.5h8M12 15.5v5"/><path d="M7 8h4M7 11h7"/></svg></span><h3>UK EPOS</h3><p>EPOS and card terminals for UK shops, caf&eacute;s and restaurants, with stock and online ordering.</p><span class="more">Explore UK EPOS <span class="arr" aria-hidden="true">&rarr;</span></span></a>
+  <a class="pcard rv d2" href="#ecommerce"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></span><h3>Global Ecommerce</h3><p>Build your online store with the AI Web Builder and take orders with built-in checkout.</p><span class="more">Explore Ecommerce <span class="arr" aria-hidden="true">&rarr;</span></span></a>
+  <a class="pcard rv d3" href="#banking"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5L12 4l9 5.5M4.5 20h15M6 10.5v7M10 10.5v7M14 10.5v7M18 10.5v7"/></svg></span><h3>Banking</h3><p>Business accounts, same-day settlement and multi-currency, through our regulated partners.</p><span class="more">Explore Banking <span class="arr" aria-hidden="true">&rarr;</span></span></a>
+</div></div></section>
+
+<section class="s" id="payments"><div class="wrap split">
+  <div class="copy rv">
+    <span class="kicker"><span>01</span>Payments</span>
+    <h2>Get paid every way your customers pay.</h2>
+    <p class="intro">In person, online or on the move. Take a payment in a few taps from the FlowPOS app and see every transaction in one place.</p>
+    <ul class="feats"><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Card payments</b><span>Accept cards in person on a terminal or on your phone.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Tap to Pay on iPhone</b><span>Take contactless payments on iPhone, with no extra hardware.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Payment links</b><span>Send a link by SMS or email and get paid for deposits and invoices.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Subscriptions</b><span>Charge regular customers automatically, every month.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Online checkout</b><span>Take card payments on your website or online store.</span></div></li></ul>
+    <a class="btn btn-dark" href="https://app.flowpos.co.uk">Start taking payments <span class="arr" aria-hidden="true">&rarr;</span></a>
+  </div>
+  <div class="vis rv d1"><div class="phones">
+    <div class="dev-phone"><img src="assets/img/app-dashboard.webp" alt="FlowPOS app dashboard showing balance, revenue, payments and orders" width="600" height="1298" loading="lazy"></div>
+    <div class="dev-phone"><img src="assets/img/app-new-payment.webp" alt="Creating a new payment in the FlowPOS app" width="600" height="1298" loading="lazy"></div>
+    <div class="dev-phone"><img src="assets/img/app-tap-to-pay.webp" alt="Choosing Tap to Pay on iPhone as the payment method" width="600" height="1298" loading="lazy"></div>
+  </div></div>
+</div></section>
+
+<section class="s off" id="epos"><div class="wrap split rev">
+  <div class="copy rv">
+    <span class="kicker"><span>02</span>UK EPOS</span>
+    <h2>Run your counter, tables and stock from one till.</h2>
+    <p class="intro">FlowPOS EPOS is built for UK hospitality and retail. Ring up orders, take card payments and keep stock in check, with online orders landing in the same place.</p>
+    <ul class="feats"><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>EPOS till</b><span>Fast order taking with notes, tables, eat in, take away and delivery.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Card terminals</b><span>Take card payments at the counter, linked to every order.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Stock</b><span>Track what you sell and see what is running low.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Online ordering</b><span>Let customers order for collection or delivery online.</span></div></li></ul>
+    <a class="btn btn-dark" href="https://app.flowpos.co.uk">Get started with EPOS <span class="arr" aria-hidden="true">&rarr;</span></a>
+  </div>
+  <div class="vis rv d1" style="position:relative">
+    <div class="dev-tablet"><img src="assets/img/epos-till.webp" alt="FlowPOS EPOS till with an order, order note and eat in, take away and delivery options" width="756" height="472" loading="lazy"></div>
+  </div>
+</div></section>
+
+<section class="s" id="ecommerce"><div class="wrap split">
+  <div class="copy rv">
+    <span class="kicker"><span>03</span>Global Ecommerce</span>
+    <h2>Describe your business. Get a store that sells.</h2>
+    <p class="intro">The AI Web Builder turns a short description into a branded website with your products and checkout. Then manage orders and sales from one dashboard.</p>
+    <ul class="feats"><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>AI Web Builder</b><span>Describe your business and generate your site, then edit pages, brand colours and fonts.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Online store and checkout</b><span>Add your product catalogue and take payments for delivery or collection.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Sell beyond the UK</b><span>Track sales and orders by country from your dashboard.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>One dashboard</b><span>Online and in-person sales, orders and customers together.</span></div></li></ul>
+    <a class="btn btn-dark" href="https://app.flowpos.co.uk">Build your store <span class="arr" aria-hidden="true">&rarr;</span></a>
+  </div>
+  <div class="vis rv d1"><div class="stack">
+    <div class="browser back"><div class="bar"><i></i><i></i><i></i><span>AI Web Builder</span></div><img src="assets/img/builder-ui.webp" alt="FlowPOS AI Web Builder generating a website for a homeware shop" width="1070" height="670" loading="lazy"></div>
+    <div class="browser front"><div class="bar"><i></i><i></i><i></i><span>Dashboard</span></div><img src="assets/img/dashboard-light.webp" alt="FlowPOS dashboard with sales, orders and orders by country" width="1600" height="837" loading="lazy"></div>
+  </div></div>
+</div></section>
+
+<section class="s navy" id="banking"><div class="wrap split rev">
+  <div class="copy rv">
+    <span class="kicker"><span>04</span>Banking</span>
+    <h2>Flow Banking. Your money, moving faster.</h2>
+    <p class="intro">Business accounts, same-day settlement, multi-currency, through our regulated partners. Your takings and your account, side by side.</p>
+    <ul class="feats"><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Business account</b><span>UK sort code and account number, plus IBAN.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Same-day settlement</b><span>Get your card takings paid out the same day.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Multi-currency and FX</b><span>Hold and exchange multiple currencies.</span></div></li><li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8.25" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><path d="M5.5 9.2l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Stablecoin payouts</b><span>Optional. Available only where permitted by local regulations.</span></div></li></ul>
+    <a class="btn btn-pink" href="#contact">Ask about Flow Banking <span class="arr" aria-hidden="true">&rarr;</span></a>
+    <p class="note">Banking services are provided by our regulated partners. FlowPOS is not a bank.</p>
+  </div>
+  <div class="vis rv d1"><div class="bank-vis">
+    <div class="bank-card"><div class="t"><span>Flow Business Account</span><span>GBP</span></div><div class="bal">&pound;8,420.15</div>
+      <dl class="ids"><dt>Sort code</dt><dd>&bull;&bull;-&bull;&bull;-&bull;&bull;</dd><dt>IBAN</dt><dd>GB&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;</dd></dl></div>
+    <div class="bank-row">
+      <div class="panel-w"><div class="h">Balances</div>
+        <div class="ccy"><i>GBP</i>Sterling<b>&pound;8,420.15</b></div>
+        <div class="ccy"><i>EUR</i>Euro<b>&euro;1,260.00</b></div>
+        <div class="ccy"><i>USD</i>US dollar<b>$940.50</b></div></div>
+      <div class="panel-w"><div class="h">Settlement</div><div class="tl">
+        <div class="st"><span class="d ok"></span><div>Card takings<small>Today, from your till and store</small></div></div>
+        <div class="st"><span class="d ok"></span><div>Settled same day<small>Into your Flow account</small></div></div>
+        <div class="st"><span class="d"></span><div>Convert or pay out<small>GBP, EUR, USD</small></div></div>
+      </div></div>
+    </div>
+  </div></div>
+</div></section>
+
+<section class="pricing" id="pricing"><div class="wrap"><div class="price-band rv">
+  <div class="copy">
+    <span class="kicker"><span>&pound;</span>Pricing</span>
+    <h2>Simple pricing. No monthly fee.</h2>
+    <p class="intro">Pay only when you get paid, with one simple rate for UK consumer cards.</p>
+    <a class="btn btn-dark" href="https://app.flowpos.co.uk">Start taking payments <span class="arr" aria-hidden="true">&rarr;</span></a>
+  </div>
+  <div>
+    <div class="price-grid">
+      <div class="pc hl"><div class="k">Monthly fee</div><div class="v">&pound;0</div></div>
+      <div class="pc"><div class="k">In person</div><div class="v">1.39%</div></div>
+      <div class="pc"><div class="k">Online</div><div class="v">1.25% <small>+ 20p</small></div></div>
+      <div class="pc"><div class="k">Other card types</div><div class="v" style="font-size:22px;line-height:1.3;margin-top:10px"><a href="#contact" style="color:#780AEB">Contact us <span class="arr" aria-hidden="true">&rarr;</span></a></div></div>
+    </div>
+    <p class="price-line">No monthly fee. 1.39% in person, 1.25% + 20p online on UK consumer cards. Other card types: contact us.</p>
+  </div>
+</div></div></section>
+
+<section class="s off faq" id="faq"><div class="wrap">
+  <div class="rv"><span class="kicker">FAQ</span><h2>Questions, answered.</h2><p class="intro" style="color:var(--muted);margin-top:18px;font-size:18px">Can&rsquo;t find what you need? <a href="#contact" style="color:var(--purple);font-weight:600">Get in touch</a>.</p></div>
+  <div class="rv d1">
+    <details><summary>Is there a monthly fee?<span class="pm"></span></summary><p>No. FlowPOS has no monthly fee. You pay per transaction: 1.39% in person and 1.25% + 20p online on UK consumer cards.</p></details>
+    <details><summary>What about business cards, Amex and other card types?<span class="pm"></span></summary><p>Other card types: contact us and we will talk you through the rates for your business.</p></details>
+    <details><summary>Do I need a card terminal?<span class="pm"></span></summary><p>Not to get started. You can take contactless payments with Tap to Pay on iPhone in the FlowPOS app, send payment links, or use a card terminal with FlowPOS EPOS at your counter.</p></details>
+    <details><summary>Can I sell online as well as in person?<span class="pm"></span></summary><p>Yes. Build your store with the AI Web Builder, take payments with online checkout, and see online and in-person sales in one dashboard.</p></details>
+    <details><summary>Is FlowPOS a bank?<span class="pm"></span></summary><p>No. Flow Banking, including business accounts, same-day settlement and multi-currency, is provided through our regulated partners. FlowPOS is not a bank.</p></details>
+    <details><summary>Do I have to use stablecoin payouts?<span class="pm"></span></summary><p>No. Stablecoin payouts are optional and available only where permitted by local regulations.</p></details>
+    <details><summary>How do I get started?<span class="pm"></span></summary><p>Create your account at <a href="https://app.flowpos.co.uk" style="color:var(--purple);font-weight:600">app.flowpos.co.uk</a>, or leave your details below and our team will contact you.</p></details>
+  </div>
+</div></section>
+
+<section class="final" id="contact"><div class="wrap"><div class="box rv">
+  <div>
+    <h2>One Flow. Total control.</h2>
+    <p class="lead">Payments, UK EPOS, Global Ecommerce and Banking. Start today, or talk to our team about your business.</p>
+    <div class="ctas"><a class="btn btn-pink" href="https://app.flowpos.co.uk">Start taking payments <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+    <p class="fine" style="font-size:13px;color:rgba(255,255,255,.56);margin-top:16px">No monthly fee. 1.39% in person, 1.25% + 20p online on UK consumer cards. Other card types: contact us.</p>
+  </div>
+  <!-- TODO: set the form action to the CRM / form endpoint before going live (e.g. HubSpot, Formspree or your own API). -->
+  <form class="form" action="#TODO-form-endpoint" method="post" novalidate>
+    <h3>Talk to our team</h3>
+    <p class="sub">Leave your details and we&rsquo;ll be in touch.</p>
+    <div class="two">
+      <label>Name<input name="name" autocomplete="name" required></label>
+      <label>Business name<input name="business" autocomplete="organization"></label>
+    </div>
+    <label>Work email<input type="email" name="email" autocomplete="email" required></label>
+    <label>I&rsquo;m interested in<select name="interest"><option>Payments</option><option>UK EPOS</option><option>Global Ecommerce</option><option>Banking</option><option>Everything</option></select></label>
+    <button class="btn btn-pink" type="submit">Request a call back <span class="arr" aria-hidden="true">&rarr;</span></button>
+    <p class="ok" role="status">Thanks. We&rsquo;ve got your details and will be in touch.</p>
+    <p class="legal">We&rsquo;ll only use your details to contact you about FlowPOS. See our <a href="/privacy-policy" style="text-decoration:underline">Privacy policy</a>.</p>
+  </form>
+</div></div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="top">
+    <div><img src="assets/img/flow-logo-white.svg" alt="FlowPOS" width="122" height="32"><p>Payments, UK EPOS, Global Ecommerce and Banking in one platform.</p></div>
+    <div><h4>Platform</h4><ul><li><a href="#payments">Payments</a></li><li><a href="#epos">UK EPOS</a></li><li><a href="#ecommerce">Global Ecommerce</a></li><li><a href="#banking">Banking</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div><h4>Get started</h4><ul><li><a href="https://app.flowpos.co.uk">Create an account</a></li><li><a href="https://app.flowpos.co.uk">Log in</a></li></ul></div>
+  </div>
+  <div class="bot">
+    <div>&copy; <span id="yr">2026</span> Flow POS Limited.<br>Banking services are provided by our regulated partners. FlowPOS is not a bank.</div>
+    <!-- TODO: point Terms at the real terms page -->
+    <div class="links"><a href="/privacy-policy">Privacy</a><a href="#terms" id="terms">Terms</a></div>
+  </div>
+</div></footer>
+<script src="assets/js/site.js"></script>
 </body>
 </html>
